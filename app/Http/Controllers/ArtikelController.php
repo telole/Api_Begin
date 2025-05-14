@@ -16,29 +16,29 @@ class ArtikelController extends Controller
     public function index()
     {
         //
-        // return response()->json([
-        //     'message' => 'list artikel',
-        //     'artikel' => artikels::latest('publish_date')->get(),
-        // ]);
+        return response()->json([
+            'message' => 'list artikel',
+            'artikel' => artikels::latest('publish_date')->get(),
+        ]);
 
         //untuk menampilkan data terbaru sebanyak 3 data dalam satu pemanggilan
-        $artikel = artikels::latest('publish_date')->paginate(3);
+        // $artikel = artikels::latest('publish_date');
 
-        //validasi jika da5a kosong
-        if($artikel->isEmpty()) {
-            return response()->json([
-                'message' => 'empty',
-                'status' => 404
-            ], 404); 
-        }else {
-            return response()->json([
-                'message' => 'success',
-                'status' => Response::HTTP_OK,
-                'data' => [
-                    $artikel
-                ]
-            ]);
-        }
+        // //validasi jika data kosong
+        // if($artikel->isEmpty()) {
+        //     return response()->json([
+        //         'message' => 'empty',
+        //         'status' => 404
+        //     ], 404); 
+        // }else {
+        //     return response()->json([
+        //         'message' => 'success',
+        //         'status' => Response::HTTP_OK,
+        //         'data' => [
+        //             $artikel
+        //         ]
+        //     ]);
+        // }
     }
 
     /**
@@ -121,7 +121,7 @@ class ArtikelController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'content' => 'required',
-            'pubish_date' => 'nullable'
+            // 'pubish_date' => 'nullable'
         ]);
 
         if($validator->fails()) {
@@ -133,7 +133,7 @@ class ArtikelController extends Controller
         $artikel->update([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'publish_date' => $request->input('publish_date')
+            // 'publish_date' => $request->input('publish_date')
         ]);
 
         return response()->json([
